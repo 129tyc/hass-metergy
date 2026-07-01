@@ -1,14 +1,14 @@
 {
   "domain": "metergy",
   "name": "Metergy",
-  "version": "0.1.0",
-  "documentation": "https://github.com/129tyc/hass-metergy",
-  "issue_tracker": "https://github.com/129tyc/hass-metergy/issues",
   "codeowners": ["@129tyc"],
-  "dependencies": ["recorder"],
   "config_flow": true,
+  "dependencies": ["recorder"],
+  "documentation": "https://github.com/129tyc/hass-metergy",
   "iot_class": "cloud_polling",
-  "requirements": []
+  "issue_tracker": "https://github.com/129tyc/hass-metergy/issues",
+  "requirements": [],
+  "version": "0.1.0"
 }
 
 
