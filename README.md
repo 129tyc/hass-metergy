@@ -3,9 +3,9 @@
 Import Metergy electricity and water consumption into Home Assistant long-term
 statistics for the Energy dashboard.
 
-This integration is unofficial and is not affiliated with, endorsed by,
-sponsored by, or supported by Metergy Solutions, MyMetergySolutions, or KUBRA.
-Use it at your own responsibility and respect the provider's terms.
+This is an unofficial community project. It is not affiliated with, endorsed by,
+or supported by Metergy Solutions, MyMetergySolutions, or KUBRA. Use it at your
+own risk and respect the provider's terms.
 
 ## Features
 
@@ -13,9 +13,9 @@ Use it at your own responsibility and respect the provider's terms.
 - Electricity: hourly kWh import for the Energy dashboard
 - Water: daily cold and hot water volume import, stored in liters
 - Nightly scheduler at 03:10 local time
-- Rolling scheduled backfill to re-import recently settled data
+- Scheduled imports can re-check recent days when provider data arrives late
 - Manual `metergy.backfill` service for historical ranges
-- Persistent notifications for import and backfill failures
+- Persistent notifications for backfill status and scheduled import failures
 - Home Assistant events for automation triggers
 
 ## Installation
@@ -36,8 +36,8 @@ custom repository:
 
 ### Manual install
 
-1. Copy `custom_components/metergy` into your Home Assistant config directory
-   as `custom_components/metergy`.
+1. Copy the `custom_components/metergy` folder from this repository into
+   `<config>/custom_components/metergy`.
 2. Restart Home Assistant.
 3. Go to Settings > Devices & services > Add integration > Metergy.
 
@@ -47,8 +47,10 @@ custom repository:
 - Username: your Metergy account email
 - Password: your Metergy account password
 - Toggles: enable Electricity, Cold water, and/or Hot water
-- Lag days: electricity defaults to 2, water defaults to 3
-- Rolling backfill days: number of days to re-import during scheduled imports
+- Lag days: how many days behind today the scheduled import should fetch;
+  electricity defaults to 2, water defaults to 3
+- Rolling backfill days: how many recent target days to re-import during
+  scheduled imports; defaults to 1
 
 Options flow lets you update credentials and import settings after setup.
 
@@ -77,8 +79,8 @@ The integration fires events that can be used in automations:
 - `metergy_import_completed`
 - `metergy_import_failed`
 
-Event payloads include the configured `meter_id` so automations can distinguish
-multiple configured meters.
+Event payloads include the `meter_id` so automations can identify the configured
+meter.
 
 Example:
 
@@ -89,23 +91,23 @@ automation:
       - platform: event
         event_type: metergy_import_failed
     action:
-      - service: notify.mobile_app
+      - service: persistent_notification.create
         data:
+          title: Metergy import failed
           message: "Metergy import failed: {{ trigger.event.data.error }}"
 ```
 
 ## Privacy and logging
 
-This integration stores credentials in Home Assistant's config entry storage,
-the same place Home Assistant stores credentials for other integrations.
+Credentials are stored in the integration's Home Assistant config entry.
 
-The integration does not intentionally log passwords, cookies, usernames, or
-full request URLs. Event payloads and some Home Assistant UI metadata can include
-the configured `meter_id`; review logs and diagnostics before sharing them.
+The integration avoids logging passwords, cookies, usernames, and full request
+URLs. The config entry title and event payloads can still include the configured
+`meter_id`; check any log snippets before posting them publicly.
 
 Do not commit portal captures, HAR files, cookies, or raw API responses to a
-public repository. The `.gitignore` includes rules to reduce the chance of doing
-that accidentally.
+public repository. The `.gitignore` already ignores common capture and response
+files.
 
 ## Development
 
@@ -127,7 +129,6 @@ python -m compileall -q custom_components\metergy
 
 - Timestamps align to local boundaries but are stored as UTC for Recorder.
 - Water statistics are stored in liters.
-- Brand assets are intentionally not based on any official Metergy logo.
 
 ## License
 
