@@ -1,0 +1,45 @@
+{
+  "title": "Metergy",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Metergy setup",
+        "description": "Enter your Metergy account credentials. The integration will automatically handle login and cookie management.",
+        "data": {
+          "meter_id": "Meter ID",
+          "username": "Username (email)",
+          "password": "Password",
+          "electricity": "Import electricity",
+          "cold_water": "Import cold water",
+          "hot_water": "Import hot water",
+          "electricity_lag": "Electricity lag days",
+          "water_lag": "Water lag days",
+          "rolling_backfill_days": "Rolling backfill days"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This meter ID is already configured"
+    },
+    "error": {}
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Metergy options",
+        "description": "Update your Metergy account credentials and import settings.",
+        "data": {
+          "meter_id": "Meter ID",
+          "username": "Username (email)",
+          "password": "Password",
+          "electricity": "Import electricity",
+          "cold_water": "Import cold water",
+          "hot_water": "Import hot water",
+          "electricity_lag": "Electricity lag days",
+          "water_lag": "Water lag days",
+          "rolling_backfill_days": "Rolling backfill days"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+homeassistant
+voluptuous
+aiohttp
+yarl
+black
+ruff
+pre-commit

@@ -1,0 +1,36 @@
+backfill:
+  name: Backfill Metergy statistics
+  description: Import historical data into Home Assistant long-term statistics. Shows persistent notifications for progress and completion. Fires events for automation triggers.
+  fields:
+    start:
+      name: Start date
+      description: Inclusive date (YYYY-MM-DD).
+      example: "2025-10-10"
+      selector:
+        date:
+    end:
+      name: End date
+      description: Inclusive date (YYYY-MM-DD).
+      example: "2025-10-17"
+      selector:
+        date:
+    electricity:
+      name: Electricity
+      description: Import electricity hourly totals for each day in range.
+      default: true
+      selector:
+        boolean:
+    cold_water:
+      name: Cold water
+      description: Import cold water daily totals for each day in range.
+      default: false
+      selector:
+        boolean:
+    hot_water:
+      name: Hot water
+      description: Import hot water daily totals for each day in range.
+      default: false
+      selector:
+        boolean:
+
+
