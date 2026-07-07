@@ -10,6 +10,8 @@ DEFAULT_HOT_WATER_ENABLED = False
 DEFAULT_ELECTRICITY_LAG_DAYS = 2  # Provider appears ~2 days delayed
 DEFAULT_WATER_LAG_DAYS = 3  # Water often ~3 days delayed
 DEFAULT_ROLLING_BACKFILL_DAYS = 1  # Import target day only when set to 1
+DEFAULT_SCHEDULE_HOUR = 21
+DEFAULT_SCHEDULE_MINUTE = 10
 
 # Statistic IDs (use liters for water to match provider payload LTR)
 STAT_ID_ELECTRICITY = "metergy:electricity_kwh"

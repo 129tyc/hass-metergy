@@ -12,7 +12,7 @@ own risk and respect the provider's terms.
 - Automatic login with username and password
 - Electricity: hourly kWh import for the Energy dashboard
 - Water: daily cold and hot water volume import, stored in liters
-- Nightly scheduler at 03:10 local time
+- Nightly scheduler, defaulting to 21:10 local time
 - Scheduled imports can re-check recent days when provider data arrives late
 - Manual `metergy.backfill` service for historical ranges
 - Persistent notifications for backfill status and scheduled import failures
@@ -51,6 +51,8 @@ custom repository:
   electricity defaults to 2, water defaults to 3
 - Rolling backfill days: how many recent target days to re-import during
   scheduled imports; defaults to 1
+- Scheduled import time: local hour and minute for the nightly import; defaults
+  to 21:10
 
 Options flow lets you update credentials and import settings after setup.
 

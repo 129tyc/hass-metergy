@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import timedelta
 import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.event import async_track_time_change
+from homeassistant.util import dt as dt_util
 
 from .api import MetergyClient
 from .const import (
@@ -31,14 +32,26 @@ class MetergyCoordinator:
         self._unsub = None
 
     async def async_setup(self) -> None:
+        data = self.hass.data[DOMAIN][self.entry.entry_id]
+        schedule_hour = int(data["schedule_hour"])
+        schedule_minute = int(data["schedule_minute"])
+
         @callback
         async def _midnight_job(now):  # noqa: ANN001
             _LOGGER.debug("Scheduled nightly import triggering at %s", now)
             await self.async_run_import()
 
-        # Run every day at 03:10 local time to allow provider settlement
+        _LOGGER.debug(
+            "Scheduling Metergy import at %02d:%02d local time",
+            schedule_hour,
+            schedule_minute,
+        )
         self._unsub = async_track_time_change(
-            self.hass, _midnight_job, hour=3, minute=10, second=0
+            self.hass,
+            _midnight_job,
+            hour=schedule_hour,
+            minute=schedule_minute,
+            second=0,
         )
 
     async def async_unload(self) -> None:
@@ -56,6 +69,7 @@ class MetergyCoordinator:
         hot_water: bool = data["hot_water"]
         elec_lag: int = data["electricity_lag"]
         water_lag: int = data["water_lag"]
+        today = dt_util.now().date()
         backfill_days: int = int(
             data.get("rolling_backfill_days", DEFAULT_ROLLING_BACKFILL_DAYS)
         )
@@ -113,7 +127,7 @@ class MetergyCoordinator:
 
         # Electricity: D - elec_lag
         if electricity:
-            target = date.today() - timedelta(days=elec_lag)
+            target = today - timedelta(days=elec_lag)
             start = target - timedelta(days=backfill_days - 1)
             _LOGGER.debug(
                 "Electricity target range: %s to %s (lag=%s, backfill=%s)",
@@ -141,7 +155,7 @@ class MetergyCoordinator:
                 current += timedelta(days=1)
 
         # Water: Cold/Hot daily at D - water_lag
-        target_w = date.today() - timedelta(days=water_lag)
+        target_w = today - timedelta(days=water_lag)
         start_w = target_w - timedelta(days=backfill_days - 1)
         _LOGGER.debug(
             "Water target range: %s to %s (lag=%s, backfill=%s)",

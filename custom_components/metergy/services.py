@@ -10,6 +10,7 @@ import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import config_validation as cv
+from homeassistant.util import dt as dt_util
 
 from .api import MetergyClient
 from .const import (
@@ -62,7 +63,7 @@ async def async_setup_services(hass: HomeAssistant, entry: ConfigEntry) -> None:
         start: date | None = params.get("start")
         end: date | None = params.get("end")
         if start is None or end is None:
-            end = date.today()
+            end = dt_util.now().date()
             start = end - timedelta(days=7)
 
         do_e = bool(params.get("electricity", True))

@@ -14,7 +14,9 @@
           "hot_water": "Import hot water",
           "electricity_lag": "Electricity lag days",
           "water_lag": "Water lag days",
-          "rolling_backfill_days": "Rolling backfill days"
+          "rolling_backfill_days": "Rolling backfill days",
+          "schedule_hour": "Scheduled import hour",
+          "schedule_minute": "Scheduled import minute"
         }
       }
     },
@@ -37,7 +39,9 @@
           "hot_water": "Import hot water",
           "electricity_lag": "Electricity lag days",
           "water_lag": "Water lag days",
-          "rolling_backfill_days": "Rolling backfill days"
+          "rolling_backfill_days": "Rolling backfill days",
+          "schedule_hour": "Scheduled import hour",
+          "schedule_minute": "Scheduled import minute"
         }
       }
     }

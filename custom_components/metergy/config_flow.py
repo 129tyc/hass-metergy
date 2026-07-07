@@ -13,6 +13,8 @@ from .const import (
     DEFAULT_ELECTRICITY_LAG_DAYS,
     DEFAULT_HOT_WATER_ENABLED,
     DEFAULT_ROLLING_BACKFILL_DAYS,
+    DEFAULT_SCHEDULE_HOUR,
+    DEFAULT_SCHEDULE_MINUTE,
     DEFAULT_WATER_LAG_DAYS,
     DOMAIN,
 )
@@ -50,6 +52,12 @@ class MetergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     "rolling_backfill_days", default=DEFAULT_ROLLING_BACKFILL_DAYS
                 ): int,
+                vol.Optional("schedule_hour", default=DEFAULT_SCHEDULE_HOUR): vol.All(
+                    int, vol.Range(min=0, max=23)
+                ),
+                vol.Optional(
+                    "schedule_minute", default=DEFAULT_SCHEDULE_MINUTE
+                ): vol.All(int, vol.Range(min=0, max=59)),
             }
         )
 
@@ -102,6 +110,14 @@ class MetergyOptionsFlow(config_entries.OptionsFlow):
                         "rolling_backfill_days", DEFAULT_ROLLING_BACKFILL_DAYS
                     ),
                 ): int,
+                vol.Optional(
+                    "schedule_hour",
+                    default=data.get("schedule_hour", DEFAULT_SCHEDULE_HOUR),
+                ): vol.All(int, vol.Range(min=0, max=23)),
+                vol.Optional(
+                    "schedule_minute",
+                    default=data.get("schedule_minute", DEFAULT_SCHEDULE_MINUTE),
+                ): vol.All(int, vol.Range(min=0, max=59)),
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema)

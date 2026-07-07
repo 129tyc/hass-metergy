@@ -11,6 +11,8 @@ from .const import (
     DEFAULT_ELECTRICITY_LAG_DAYS,
     DEFAULT_HOT_WATER_ENABLED,
     DEFAULT_ROLLING_BACKFILL_DAYS,
+    DEFAULT_SCHEDULE_HOUR,
+    DEFAULT_SCHEDULE_MINUTE,
     DEFAULT_WATER_LAG_DAYS,
     DOMAIN,
 )
@@ -39,6 +41,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "rolling_backfill_days": options.get(
             "rolling_backfill_days", DEFAULT_ROLLING_BACKFILL_DAYS
         ),
+        "schedule_hour": options.get("schedule_hour", DEFAULT_SCHEDULE_HOUR),
+        "schedule_minute": options.get("schedule_minute", DEFAULT_SCHEDULE_MINUTE),
     }
 
     # Register coordinator and services
