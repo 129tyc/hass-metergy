@@ -3,5 +3,5 @@ voluptuous
 aiohttp
 yarl
 black
-ruff
+ruff==0.6.0
 pre-commit
