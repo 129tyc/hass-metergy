@@ -22,6 +22,8 @@ own risk and respect the provider's terms.
 
 ### HACS custom repository
 
+[![Open HACS repository](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=integration&owner=129tyc&repository=hass-metergy)
+
 This repository is not currently listed in the default HACS store. Add it as a
 custom repository:
 
